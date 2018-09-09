@@ -4,6 +4,8 @@ io = require('socket.io')(http),
 ifhtml = require('is-html'),
 nicknames = [];
 
+io.set('log level',0);
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
@@ -32,6 +34,14 @@ app.get('/js/main.js', function(req, res){
   res.sendFile(__dirname + '/public/js/main.js');
 });
 
+app.get('/js/socket.io.js', function(req, res){
+  res.sendFile(__dirname + '/public/js/socket.io.js');
+});
+
+app.get('/js/jquer.js', function(req, res){
+  res.sendFile(__dirname + '/public/js/jquery.js');
+});
+
 io.on('connection', function(socket){
   console.log('An user connected.');
   socket.on('disconnect', function(){
@@ -45,7 +55,7 @@ io.on('connection', function(socket){
   });
   socket.on('create_user', function(data){
     if(ifhtml(socket.username) == true){
-      socket.emit('create_user', { error: 'ur mom gay so funny !!!!!  ! !! ' });
+      socket.emit('create_user', { error: 'The username you used has HTML.' });
     }else{
       socket.nickname = data.username
       nicknames.unshift(socket.nickname);
@@ -54,7 +64,7 @@ io.on('connection', function(socket){
   });
   socket.on('new_message', function(data){
     if(ifhtml(socket.message) == true){
-      socket.emit('new_message', { error: 'lol' });
+      socket.emit('new_message', { error: 'The message you sent has HTML.' });
     }else{
       io.emit('new_message', { username: data.username, message: data.message });
     }
