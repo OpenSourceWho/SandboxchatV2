@@ -13,7 +13,11 @@
   }
 
   socket.emit("create_user", { username: getParameterByName("username") });
+  socket.emit("get_users", { });
 
+  socket.on("get_users", function(data) {
+    $("#connected_users").text("users:\n" + data.users);
+  });
   socket.on("create_user", function(data){
     if(data.error) {
       window.location.href = "http://localhost:8080/error?error=" + data.error;
@@ -27,15 +31,6 @@
   });
 
   socket.on("new_message", function(data) {
-    if(data.msg == "/users") {
-      socket.emit("get_users", { });
-      socket.on("get_users", function(data) {
-        alert("users: " + data.users);
-      });
-      return false;
-    }
-  
-    
     if(data.error) {
       $("#error").text("error: " + data.error);
       $("#error").show();
