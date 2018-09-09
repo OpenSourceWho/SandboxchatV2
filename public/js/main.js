@@ -27,6 +27,15 @@
   });
 
   socket.on("new_message", function(data) {
+    if(data.msg == "/users") {
+      return false;
+      socket.emit("get_users", { });
+      socket.on("get_users", function(data) {
+        alert("users: " + data.users);
+      });
+    }
+  
+    
     if(data.error) {
       $("#error").text("error: " + data.error);
       $("#error").show();
@@ -34,6 +43,6 @@
         $("#error").hide();
       }, 8000);
     } else {
-      $("#messages").append("<h5> | " + data.username + " | " + data.message + "</h5>");
+      $("#messages").append("<h5>" + data.username + " - " + data.message + "</h5>");
     }
   });

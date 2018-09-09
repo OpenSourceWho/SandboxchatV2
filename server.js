@@ -69,6 +69,9 @@ io.on('connection', function(socket){
       io.emit('new_message', { username: data.username, message: data.message });
     }
   });
+  socket.on('get_users', function(data){
+    socket.emit('get_users', { users: nicknames.toString() });
+  });
 });
 
 http.listen(8080, function(){
