@@ -28,11 +28,11 @@
 
   socket.on("new_message", function(data) {
     if(data.msg == "/users") {
-      return false;
       socket.emit("get_users", { });
       socket.on("get_users", function(data) {
         alert("users: " + data.users);
       });
+      return false;
     }
   
     
