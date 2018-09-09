@@ -38,7 +38,7 @@ app.get('/js/socket.io.js', function(req, res){
   res.sendFile(__dirname + '/public/js/socket.io.js');
 });
 
-app.get('/js/jquer.js', function(req, res){
+app.get('/js/jquery.js', function(req, res){
   res.sendFile(__dirname + '/public/js/jquery.js');
 });
 
